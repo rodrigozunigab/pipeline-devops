@@ -1,13 +1,20 @@
-def call(){
+def call(stageOptions){
   
-        stage("Build & test"){   
-            env.TAREA =  env.STAGE_NAME        
-            sh "./gradlew clean build"            
+        def buildEjecutado =false;
+        stage("Build & Test"){   
+            env.TAREA =  env.STAGE_NAME  
+            if (stageOptions.contains('Build'))  {   
+                sh "./gradlew clean build -x test" 
+                buildEjecutado =true;
+            } 
+            else  if (stageOptions.contains('Test'))      
+                sh "./gradlew clean build -x build"              
         }
         stage("Sonar"){
             env.TAREA =  env.STAGE_NAME 
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
+                if (stageOptions.contains('Sonar')) 
                 sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"   
             }                        
         }

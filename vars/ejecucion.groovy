@@ -2,6 +2,7 @@ def call(){
 pipeline {
     agent any
     parameters { choice(name: 'HERRAMIENTA', choices: ['gradle', 'maven'], description: 'opcion de compilacion')}
+    string(name: 'stage' defaultValue: '', description: '')
     stages {
         stage('Pipeline') {
             steps {
@@ -13,7 +14,7 @@ pipeline {
                 if (params.HERRAMIENTA == 'gradle'){
                     	//def ejecucion = load 'gradle.groovy'
 	                    //ejecucion.call()
-                        gradle.call();
+                        gradle.call(stage);
                 } else {
                     	//def ejecucion = load 'maven.groovy'
 	                    //ejecucion.call()   
