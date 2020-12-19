@@ -8,14 +8,14 @@ def call(stageOptions){
                 sh "./gradlew clean build -x test" 
                 buildEjecutado =true;
             } 
-            else  if (stageOptions.contains('Test'))      
+            else  if (stageOptions.contains('Test') || (stageOptions ==''))      
                 sh "./gradlew clean build -x build"              
         }
         stage("Sonar"){
             env.TAREA =  env.STAGE_NAME 
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
-                if (stageOptions.contains('Sonar')) 
+                if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) )
                 sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"   
             }                        
         }
