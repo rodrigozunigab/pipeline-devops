@@ -12,7 +12,8 @@ pipeline {
                 script {
                 //segun el valor del parametro se debe llamar a gradle o maven
                 env.TAREA = ''
-                echo "HERRAMIENTA SELECCIONADA: ${params.HERRAMIENTA}"   
+                echo "HERRAMIENTA SELECCIONADA: ${params.HERRAMIENTA}" 
+                echo "PARAMETROS SELECCIONADOS: ${stage}"   
                 echo "Running ${env.BUILD_ID} on ${env.JENKINS_URL}"                             
                 if (params.HERRAMIENTA == 'gradle'){
                     	//def ejecucion = load 'gradle.groovy'
