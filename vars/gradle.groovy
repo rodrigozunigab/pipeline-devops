@@ -15,8 +15,11 @@ def call(stageOptions){
         }
         stage("Sonar"){
             env.TAREA =  env.STAGE_NAME 
-            if (!buildEjecutado)
+            if (!buildEjecutado) {
                 currentBuild.result = 'FAILURE'
+                echo "No se puede ejecutar Sonar sin haber ejecutado un Build"
+                buildEjecutado = false;
+            }    
 
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
