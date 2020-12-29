@@ -11,7 +11,7 @@ def call(stageOptions){
             } 
             if ((stageOptions.contains('Test') || (stageOptions =='')) && (buildEjecutado) )     
                 sh "./gradlew clean build"   
-                //    sh "./gradlew clean build -x build"        
+         
         }
         stage("Sonar"){
             env.TAREA =  env.STAGE_NAME 
