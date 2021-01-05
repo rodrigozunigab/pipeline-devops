@@ -19,13 +19,9 @@ pipeline {
 
                                           
                 if (params.HERRAMIENTA == 'gradle'){
-                    	//def ejecucion = load 'gradle.groovy'
-	                    //ejecucion.call()
                         gradle.call(stage);
-                } else {
-                    	//def ejecucion = load 'maven.groovy'
-	                    //ejecucion.call()   
-                        maven.call();                 
+                } else {  
+                        maven.call(stage);                 
                 }
 
                 }

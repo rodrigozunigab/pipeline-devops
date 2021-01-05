@@ -1,90 +1,50 @@
 def call(stageOptions){
   
-        def ejecutarBuild = false;
-        stage("compile"){   
+       def ejecutarBuild = false;
+        stage("Build & Test"){   
             env.TAREA =  env.STAGE_NAME 
-            ejecutarBuild =true;
-            echo 'stage compile'
-            sh 'mvn clean compile -e'         
-        }
-        stage("unitTest"){   
-            env.TAREA =  env.STAGE_NAME
-            echo 'stage unitTest' 
-            sh 'mvn clean test -e'          
-        }
-        stage("jar"){   
-            env.TAREA =  env.STAGE_NAME 
-            echo 'stage jar'
-            sh 'mvn clean package -e'          
-        }
+            ejecutarBuild =false;
 
-        stage("sonar"){
+            if (stageOptions.contains('Build') || (stageOptions ==''))  {   
+                sh "./gradlew clean build -x test" 
+                buildEjecutado =true;
+            } 
+            if ((stageOptions.contains('Test') || (stageOptions =='')) && (buildEjecutado) )     
+            if ((stageOptions.contains('Test') || (stageOptions =='')) && (env.EJCUTARBUILD) )     
+                sh "./gradlew clean build"          
+        }
+        
+        stage("Sonar"){
             env.TAREA =  env.STAGE_NAME 
-            echo 'stage sonar'
             if (!buildEjecutado) {
                 currentBuild.result = 'FAILURE'
                 echo "No se puede ejecutar Sonar sin haber ejecutado un Build"
+                buildEjecutado = false;
             }    
 
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) )
+                if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (env.EJCUTARBUILD) )
                     sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"   
             }                        
         }
-        stage("nexusUpload"){    
-            env.TAREA =  env.STAGE_NAME  
-            echo 'stage nexusUpload' 
-            if ((stageOptions.contains('Nexus') || (stageOptions =='')) && (buildEjecutado) )      
-                nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/libs/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '2.0.1']]]                     
-        } 
-        stage("gitCreateRelease"){    
-            env.TAREA =  env.STAGE_NAME  
-            echo 'stage gitCreateRelease' 
-
-        } 
-        stage("gitDiff"){    
-            env.TAREA =  env.STAGE_NAME  
-            echo 'stage gitDiff' 
-
-        } 
-        stage("nexusDownload"){    
-            env.TAREA =  env.STAGE_NAME  
-            echo 'stage nexusDownload'              
-            sh 'curl -X GET -u admin:Pch1axli3003 http://localhost:9000/repository/test-nexus/com/devopsusach2020/DevOpsUsach2020/0.0.1/DevOpsUsach2020-0.0.1.jar -O'
-        } 
-        stage("run"){
+        stage("Run"){
             env.TAREA =  env.STAGE_NAME 
-            echo 'stage run'
             if ((stageOptions.contains('Run') || (stageOptions =='')) && (buildEjecutado) ){ 
                 sh "nohup bash gradlew bootRun &"
-                sleep 20 
-            }                          
+                sleep 20                        
         }
-        stage("test"){
+        stage("Rest"){
             env.TAREA =  env.STAGE_NAME 
-            echo 'stage test'
             if ((stageOptions.contains('Rest') || (stageOptions =='')) && (buildEjecutado) ) 
                 sh 'curl -X GET "http://localhost:8081/rest/mscovid/test?msg=testing"'
         }  
-
-         stage("gitMergeMaster"){    
-            env.TAREA =  env.STAGE_NAME  
-            echo 'stage gitMergeMaster' 
-
-        } 
-        stage("gitMergeDevelop"){    
+        stage("Nexus"){    
             env.TAREA =  env.STAGE_NAME   
-            echo 'stage gitMergeDevelop'
-
-        } 
-        stage("gitTagMaster"){    
-            env.TAREA =  env.STAGE_NAME 
-            echo 'stage gitTagMaster'  
-
-        } 
-
-             
+            if ((stageOptions.contains('Nexus') || (stageOptions =='')) && (buildEjecutado) )          
+                nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/libs/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '2.0.1']]]                     
+        }                    
 
 }
 
