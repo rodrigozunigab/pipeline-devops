@@ -1,6 +1,24 @@
 def call(stageOptions){
         def buildEjecutado = false;
   
+         stage("Validar"){
+
+           if (
+                stageOptions.contains('Compile Code')           ||
+                stageOptions.contains('Test Code')              ||
+                stageOptions.contains('Jar')                    ||
+                stageOptions.contains('SonarQube analysis')     ||
+                stageOptions.contains('Upload Nexus')           || 
+                (stageOptions =='')
+               ) {
+               echo "Ok, se continua con los stage, ya que ingreso parametros conocidos"
+            } else {
+                currentBuild.result = 'FAILURE'
+                echo "No se puede ejecutar este pipeline, ya que no ingreso parametros conocidos"
+            }   
+
+       }
+
         stage('Compile Code') {
                 env.TAREA =  env.STAGE_NAME 
                 buildEjecutado =false;
