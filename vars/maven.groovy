@@ -5,8 +5,7 @@ def call(stageOptions){
                 env.TAREA =  env.STAGE_NAME 
                 buildEjecutado =false;
                 if (stageOptions.contains('Compile Code') || (stageOptions ==''))  { 
-                    sh 'mvn clean compile -e'
-                    
+                    sh 'mvn clean compile -e'                    
                 }
         }
 
