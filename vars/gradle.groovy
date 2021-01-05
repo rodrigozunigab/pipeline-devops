@@ -2,6 +2,25 @@ def call(stageOptions){
   
        def buildEjecutado = false;
 
+       stage("Validar"){
+
+           if (
+                (stageOptions.contains('Build')  ||
+                (stageOptions.contains('Test')   ||
+                (stageOptions.contains('Sonar')  ||
+                (stageOptions.contains('Run')    ||
+                (stageOptions.contains('Rest')   || 
+                (stageOptions.contains('Nexus')  || 
+                (stageOptions =='')
+               )
+               echo "Ok, se continua con los stage, ya que ingreso parametros conocidos"
+            else {
+                currentBuild.result = 'FAILURE'
+                echo "No se puede ejecutar este pipeline, ya que no ingreso parametros conocidos"
+            }   
+
+       }
+
         stage("Build & Test"){   
             env.TAREA =  env.STAGE_NAME 
             buildEjecutado =false;

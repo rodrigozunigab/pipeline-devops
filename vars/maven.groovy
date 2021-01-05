@@ -15,7 +15,7 @@ def call(stageOptions){
                     sh 'mvn clean test -e'
                 } 
         }
-        stage('Jar ') {        
+        stage('Jar') {        
                 env.TAREA =  env.STAGE_NAME 
                 if ((stageOptions.contains('Test') || (stageOptions ==''))) {      
                     sh 'mvn clean package -e' 
@@ -35,13 +35,7 @@ def call(stageOptions){
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) )
                     sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'  
             }  
-        }
-
-        stage("Rest"){
-            env.TAREA =  env.STAGE_NAME 
-            if ((stageOptions.contains('Rest') || (stageOptions =='')) && (buildEjecutado) ) 
-                sh 'curl -X GET "http://localhost:8081/rest/mscovid/test?msg=testing"'
-        }          
+        }         
 
         stage('Upload Nexus') {  
             env.TAREA =  env.STAGE_NAME   
