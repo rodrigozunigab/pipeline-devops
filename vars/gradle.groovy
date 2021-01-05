@@ -1,10 +1,10 @@
 def call(stageOptions){
   
-       def ejecutarBuild = false;
-       
+       def buildEjecutado = false;
+
         stage("Build & Test"){   
             env.TAREA =  env.STAGE_NAME 
-            ejecutarBuild =false;
+            buildEjecutado =false;
 
             if (stageOptions.contains('Build') || (stageOptions ==''))  {   
                 sh "./gradlew clean build -x test" 
