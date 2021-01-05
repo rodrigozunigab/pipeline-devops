@@ -5,16 +5,16 @@ def call(stageOptions){
        stage("Validar"){
 
            if (
-                (stageOptions.contains('Build')  ||
-                (stageOptions.contains('Test')   ||
-                (stageOptions.contains('Sonar')  ||
-                (stageOptions.contains('Run')    ||
-                (stageOptions.contains('Rest')   || 
-                (stageOptions.contains('Nexus')  || 
+                stageOptions.contains('Build')  ||
+                stageOptions.contains('Test')   ||
+                stageOptions.contains('Sonar')  ||
+                stageOptions.contains('Run')    ||
+                stageOptions.contains('Rest')   || 
+                stageOptions.contains('Nexus')  || 
                 (stageOptions =='')
-               )
+               ) {
                echo "Ok, se continua con los stage, ya que ingreso parametros conocidos"
-            else {
+            } else {
                 currentBuild.result = 'FAILURE'
                 echo "No se puede ejecutar este pipeline, ya que no ingreso parametros conocidos"
             }   
