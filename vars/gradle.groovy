@@ -9,9 +9,9 @@ def call(stageOptions){
                 sh "./gradlew clean build -x test" 
                 buildEjecutado =true;
             } 
-            if ((stageOptions.contains('Test') || (stageOptions =='')) && (buildEjecutado) )     
-            if ((stageOptions.contains('Test') || (stageOptions =='')) && (env.EJCUTARBUILD) )     
-                sh "./gradlew clean build"          
+            if ((stageOptions.contains('Test') || (stageOptions =='')) && (buildEjecutado) ) {        
+                sh "./gradlew clean build"  
+            }            
         }
         
         stage("Sonar"){
@@ -25,7 +25,6 @@ def call(stageOptions){
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) )
-                if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (env.EJCUTARBUILD) )
                     sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"   
             }                        
         }

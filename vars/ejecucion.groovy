@@ -15,7 +15,6 @@ pipeline {
                 echo "1.-HERRAMIENTA SELECCIONADA: ${params.HERRAMIENTA}" 
                 echo "2.-PARAMETROS SELECCIONADOS: ${stage}"   
                 echo "3.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
-                echo "4.-Rama ${env.BRANCH_NAME}" 
 
                                           
                 if (params.HERRAMIENTA == 'gradle'){
