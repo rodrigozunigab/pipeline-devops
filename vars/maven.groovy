@@ -33,7 +33,7 @@ def call(stageOptions){
             def scannerHome = tool 'sonar-scanner';    
             withSonarQubeEnv('sonar-server') { 
                 if ((stageOptions.contains('Sonar') || (stageOptions =='')) && (buildEjecutado) )
-                    sh "${scannerHome}/bin/sonar-scanner -Dsonar.projectKey=ejemplo-gradle -Dsonar.java.binaries=build"   
+                    sh 'mvn org.sonarsource.scanner.maven:sonar-maven-plugin:3.7.0.1746:sonar'  
             }  
         }
 
@@ -46,7 +46,7 @@ def call(stageOptions){
         stage('Upload Nexus') {  
             env.TAREA =  env.STAGE_NAME   
             if ((stageOptions.contains('Nexus') || (stageOptions =='')) && (buildEjecutado) )          
-                nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/libs/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '2.0.1']]]                     
+                nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '2.0.1']]]                     
         }            
 
 }
