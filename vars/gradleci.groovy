@@ -1,9 +1,6 @@
 def call(){
   
         def buildEjecutado = false;
-        //figlet 'Gradle'
-        //figlet 'Despliegue Continua'
-
         echo 'Gradle'
         echo 'Despliegue Continua'
 
