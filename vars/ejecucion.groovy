@@ -17,6 +17,8 @@ pipeline {
                         gradleci.call(stage);
                 } else if (env.GIT_BRANCH == "release"){  
                         gradlecd.call(stage);                 
+                } else {
+                    echo " La rama <${env.GIT_BRANCH}> no se proceso" 
                 }
 
                 }
