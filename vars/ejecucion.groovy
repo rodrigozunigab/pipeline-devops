@@ -11,6 +11,8 @@ pipeline {
             steps {
                 script {
                 //segun el valor del parametro se debe llamar a gradle o maven
+                sh 'env'
+                fliglet 'HOLA RZB'
                 env.TAREA = ''
                 echo "1.-HERRAMIENTA SELECCIONADA: ${params.HERRAMIENTA}" 
                 echo "2.-PARAMETROS SELECCIONADOS: ${stage}"   
