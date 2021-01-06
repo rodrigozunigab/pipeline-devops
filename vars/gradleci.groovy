@@ -2,9 +2,9 @@ def call(){
   
         def buildEjecutado = false;
         echo 'Gradle'
-        echo 'Despliegue Continua'
+        echo 'Integracion Continua'
 
-        stage("Build & Test"){   
+        stage("buildAndTest"){   
             env.TAREA =  env.STAGE_NAME 
             buildEjecutado =false;
  
@@ -16,7 +16,7 @@ def call(){
             }            
         }
         
-        stage("Sonar"){
+        stage("sonar"){
             env.TAREA =  env.STAGE_NAME 
             if (!buildEjecutado) {
                 currentBuild.result = 'FAILURE'
@@ -31,20 +31,20 @@ def call(){
             }                        
         }
 
-        stage("Run"){
+        stage("runJar"){
             env.TAREA =  env.STAGE_NAME 
             if (buildEjecutado){ 
                 sh "nohup bash gradlew bootRun &"
                 sleep 20                        
             }
         }
-        stage("Rest"){
+        stage("rest"){
             env.TAREA =  env.STAGE_NAME 
             if (buildEjecutado) 
                 sh 'curl -X GET "http://localhost:8081/rest/mscovid/test?msg=testing"'
         }  
 
-        stage("Nexus"){    
+        stage("nexusCI"){    
             env.TAREA =  env.STAGE_NAME   
             if (buildEjecutado)          
                 nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/libs/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: '2.0.1']]]                     
