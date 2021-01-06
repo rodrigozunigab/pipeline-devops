@@ -14,9 +14,9 @@ pipeline {
 
                                           
                 if (env.GIT_BRANCH == "develop" || env.GIT_BRANCH == "feature"){
-                        gradleci.call(stage);
+                        gradleci.call();
                 } else if (env.GIT_BRANCH == "release"){  
-                        gradlecd.call(stage);                 
+                        gradlecd.call();                 
                 } else {
                     echo " La rama <${env.GIT_BRANCH}> no se proceso" 
                 }
