@@ -14,7 +14,7 @@ def call(){
         stage("runDownloadedJar"){    
             env.TAREA =  env.STAGE_NAME   
             if (downloadOK) {
-                sh "nohup bash gradlew bootRun DevOpsUsach2020-0.0.1.jar &"
+                sh "java -jar DevOpsUsach2020-0.0.1.jar"
                 sleep 20   
             }             
         }  
