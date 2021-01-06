@@ -16,7 +16,7 @@ pipeline {
                 env.TAREA = ''
                 echo "1.-HERRAMIENTA SELECCIONADA: ${params.HERRAMIENTA}" 
                 echo "2.-PARAMETROS SELECCIONADOS: ${stage}"   
-                echo "3.-Running ${env.BUILD_ID} on ${env.JENKINS_URL}"   
+                echo "3.-RUNNING ${env.BUILD_ID} on ${env.JENKINS_URL}"   
 
                                           
                 if (params.HERRAMIENTA == 'gradle'){
