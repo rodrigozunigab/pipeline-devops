@@ -1,8 +1,8 @@
 def call(){
   
         def downloadOK = false;
-        echo 'Gradle'
-        echo 'Despliegue Continuo'
+        figlet 'Gradle'
+        figlet 'Despliegue Continuo'
 
         stage("downloadNexus"){    
             env.TAREA =  env.STAGE_NAME       
