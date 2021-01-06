@@ -9,8 +9,8 @@ pipeline {
                 //segun el valor del parametro se debe llamar a gradle o maven
                 sh 'env'
                 env.TAREA = '' 
-                echo "1.-RUNNING ${env.BUILD_ID} on ${env.JENKINS_URL}" 
-                echo "2.-GIT_BRANCH ${env.GIT_BRANCH}"   
+                echo "-RUNNING ${env.BUILD_ID} on ${env.JENKINS_URL}" 
+                echo "-GIT_BRANCH ${env.GIT_BRANCH}"   
 
                                           
                 if (env.GIT_BRANCH == "develop" || env.GIT_BRANCH == "feature"){
