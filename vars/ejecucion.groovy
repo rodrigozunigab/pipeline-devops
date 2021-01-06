@@ -8,7 +8,6 @@ pipeline {
                 script {
                 //segun el valor del parametro se debe llamar a gradle o maven
                 sh 'env'
-                fliglet 'HOLA RZB'
                 env.TAREA = '' 
                 echo "1.-RUNNING ${env.BUILD_ID} on ${env.JENKINS_URL}" 
                 echo "2.-GIT_BRANCH ${env.GIT_BRANCH}"   
@@ -24,6 +23,8 @@ pipeline {
             }
         }
     }
+
+    
 
     post {
         success{
