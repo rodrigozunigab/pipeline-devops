@@ -14,7 +14,7 @@ def call(){
         stage("runDownloadedJar"){    
             env.TAREA =  env.STAGE_NAME   
             if (downloadOK) {
-                sh "nohup bash gradlew bootRun &"
+                sh "nohup bash gradlew bootRun DevOpsUsach2020-0.0.1.jar &"
                 sleep 20   
             }             
         }  
@@ -28,7 +28,7 @@ def call(){
         stage("nexusCD"){    
             env.TAREA =  env.STAGE_NAME   
             if (downloadOK)          
-                nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'build/libs/DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: 'release-v1.0.0']]]                     
+                nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: 'release-v1.0.0']]]                     
         }                    
 
 }
