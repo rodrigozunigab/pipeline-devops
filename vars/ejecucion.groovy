@@ -1,10 +1,6 @@
 def call(){
 pipeline {
     agent any
-    parameters { 
-        choice(name: 'HERRAMIENTA', choices: ['gradle', 'maven'], description: 'opcion de compilacion')
-        string(name: 'stage' , defaultValue: '', description: '')
-    }
     
     stages {
         stage('Pipeline') {
@@ -13,16 +9,15 @@ pipeline {
                 //segun el valor del parametro se debe llamar a gradle o maven
                 sh 'env'
                 fliglet 'HOLA RZB'
-                env.TAREA = ''
-                echo "1.-HERRAMIENTA SELECCIONADA: ${params.HERRAMIENTA}" 
-                echo "2.-PARAMETROS SELECCIONADOS: ${stage}"   
-                echo "3.-RUNNING ${env.BUILD_ID} on ${env.JENKINS_URL}"   
+                env.TAREA = '' 
+                echo "1.-RUNNING ${env.BUILD_ID} on ${env.JENKINS_URL}" 
+                echo "2.-GIT_BRANCH ${env.GIT_BRANCH}"   
 
                                           
-                if (params.HERRAMIENTA == 'gradle'){
-                        gradle.call(stage);
+                if (${env.GIT_BRANCH} == 'CI'){
+                        gradleci.call(stage);
                 } else {  
-                        maven.call(stage);                 
+                        gradlecd.call(stage);                 
                 }
 
                 }
