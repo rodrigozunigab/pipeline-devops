@@ -13,9 +13,9 @@ pipeline {
                 echo "2.-GIT_BRANCH ${env.GIT_BRANCH}"   
 
                                           
-                if ((env.GIT_BRANCH == 'develop') || (env.GIT_BRANCH == 'feature')){
+                if (env.GIT_BRANCH.contains('develop') || env.GIT_BRANCH.contains('feature')){
                         gradleci.call(stage);
-                } else if (${env.GIT_BRANCH} == 'release'){  
+                } else if (env.GIT_BRANCH.contains('release')){  
                         gradlecd.call(stage);                 
                 }
 
