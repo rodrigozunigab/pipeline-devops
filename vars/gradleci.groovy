@@ -1,8 +1,11 @@
 def call(){
   
         def buildEjecutado = false;
-        figlet 'Gradle'
-        figlet 'Despliegue Continua'
+        //figlet 'Gradle'
+        //figlet 'Despliegue Continua'
+
+        echo 'Gradle'
+        echo 'Despliegue Continua'
 
         stage("Build & Test"){   
             env.TAREA =  env.STAGE_NAME 
