@@ -1,8 +1,8 @@
 def call(){
   
         def buildEjecutado = false;
-        echo 'Gradle'
-        echo 'Integracion Continua'
+        figlet 'Gradle'
+        figlet 'Integracion Continua'
 
         stage("buildAndTest"){   
             env.TAREA =  env.STAGE_NAME 
