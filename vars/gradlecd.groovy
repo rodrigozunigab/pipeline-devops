@@ -31,10 +31,16 @@ def call(){
                 nexusPublisher nexusInstanceId: 'nexus', nexusRepositoryId: 'test-nexus', packages: [[$class: 'MavenPackage', mavenAssetList: [[classifier: '', extension: 'jar', filePath: 'DevOpsUsach2020-0.0.1.jar']], mavenCoordinate: [artifactId: 'DevOpsUsach2020', groupId: 'com.devopsusach2020', packaging: 'jar', version: 'release-v1.0.0']]]                     
         }                    
 
+        stage("downloadDockerFile"){    
+            env.TAREA =  env.STAGE_NAME       
+            sh 'curl -LJO https://raw.githubusercontent.com/rodrigozunigab/pipeline-devops/release/Dockerfile -O' 
+            downloadDockerFileOK = true;
+        }
+
         stage("genImagenDockers"){    
             env.TAREA =  env.STAGE_NAME   
-            if (downloadOK) {
-                sh "docker build -t my-java-grupo1 ../Dockerfile"
+            if (downloadDockerFileOK) {
+                sh "docker build -t my-java-grupo1 ."
                 sleep 20   
             }             
         } 
