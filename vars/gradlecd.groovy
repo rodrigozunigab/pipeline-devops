@@ -33,7 +33,7 @@ def call(){
 
         stage("downloadDockerFile"){    
             env.TAREA =  env.STAGE_NAME       
-            sh 'curl -LJO https://raw.githubusercontent.com/rodrigozunigab/pipeline-devops/release/Dockerfile' 
+            sh 'curl -X GET https://raw.githubusercontent.com/rodrigozunigab/pipeline-devops/release/Dockerfile -O' 
             downloadDockerFileOK = true;
         }
 
