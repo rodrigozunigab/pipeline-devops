@@ -33,7 +33,7 @@ def call(){
 
         stage("genImagenDockers"){    
             env.TAREA =  env.STAGE_NAME   
-            sh "docker build -t my-java-grupo1 ../Dockerfile"
+            sh "docker build -t my-java-grupo1 ."
             dockerFileOK=true;        
         } 
 
