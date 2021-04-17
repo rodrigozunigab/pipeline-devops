@@ -33,20 +33,19 @@ def call(){
 
         stage("genImagenDockers"){    
             env.TAREA =  env.STAGE_NAME   
-            if (downloadDockerFileOK) {
-                sh "docker build -t my-java-grupo1 ../Dockerfile"
-            }             
+            sh "docker build -t my-java-grupo1 ../Dockerfile"
+            dockerFileOK=true;        
         } 
 
         stage("genTagImagenDockers"){    
             env.TAREA =  env.STAGE_NAME   
-            if (downloadDockerFileOK) {
+            if (dockerFileOK) {
                 sh "docker tag my-java-grupo1 rodrigozunigab/my-java-grupo1" 
             }             
         } 
         stage("pushImageDockerHub"){    
             env.TAREA =  env.STAGE_NAME   
-            if (downloadDockerFileOK) {
+            if (dockerFileOK) {
                 sh "docker push rodrigozunigab/my-java-grupo1" 
             }             
         }   
