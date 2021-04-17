@@ -34,7 +34,7 @@ def call(){
         stage("genImagenDockers"){    
             env.TAREA =  env.STAGE_NAME   
             if (downloadOK) {
-                sh "docker build -t my-java-grupo1 ."
+                sh "docker build -t my-java-grupo1 ../Dockerfile"
                 sleep 20   
             }             
         } 
