@@ -2,7 +2,7 @@ def call(){
   
         def downloadOK = false;
         figlet 'Gradle'
-        figlet 'Despliegue Continuo'
+        figlet 'Despliegue Continuo con Docker'
 
         stage("downloadNexus"){    
             env.TAREA =  env.STAGE_NAME       
